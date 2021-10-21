@@ -27,8 +27,8 @@ jobs:
 #     - name: Build the Docker image
 #       run: docker build --file Dockerfile --tag kunalk07/myscrapper:${GITHUB_REF##*/} .
     - name: Build
-      run: docker build -t kunalk07/scrapper1:${GITHUB_REF##*/} .
+      run: docker build -t kunalk07/scrapper2:${GITHUB_REF##*/} .
 
       
     - name: Docker Push
-      run: docker push kunalk07/scrapper1:${GITHUB_REF##*/}
+      run: docker push kunalk07/scrapper2:${GITHUB_REF##*/}
