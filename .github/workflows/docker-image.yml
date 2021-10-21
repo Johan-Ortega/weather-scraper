@@ -20,8 +20,12 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+        
+    - name: Branch name
+      run: echo running on branch ${GITHUB_REF##*/}
+   
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag kunalk07/myscrapper
+      run: docker build . --file Dockerfile --tag kunalk07/myscrapper:${GITHUB_REF##*/} .
       
     - name: Docker Push
       run: docker push kunalk07/myscrapper
