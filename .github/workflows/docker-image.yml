@@ -25,7 +25,7 @@ jobs:
       run: echo running on branch ${GITHUB_REF##*/}
    
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag kunalk07/myscrapper:${GITHUB_REF##*/} .
+      run: docker build --file Dockerfile --tag kunalk07/myscrapper:${GITHUB_REF##*/} .
       
 #     - name: Docker Push
 #       run: docker push kunalk07/myscrapper
