@@ -9,7 +9,7 @@ jobs:
       run: docker build . --file Dockerfile --tag sysdiglabs/dummy-vuln-app-kk:latest
      
     - name: Scan image
-      uses: sysdiglabs/scan-action@v1
+      uses: sysdiglabs/scan-action@master
       with:
         image-tag: "sysdiglabs/dummy-vuln-app-kk:latest"
         sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
