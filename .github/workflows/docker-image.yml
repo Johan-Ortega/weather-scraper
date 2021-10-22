@@ -44,7 +44,7 @@ jobs:
         path: "."
 
     - name: Docker Push
-      run: docker push ${{ matrix.dir }}/test:${GITHUB_REF##*/}
+      run: docker push kunalk07/test:${GITHUB_REF##*/}
 
     # - name: upload Anchore scan SARIF report
     #   uses: github/codeql-action/upload-sarif@v1
