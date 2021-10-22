@@ -9,7 +9,7 @@ jobs:
       run: docker build . --file Dockerfile --tag kunalk07/test-vuln-app:latest
      
     - name: Scan current project
-      uses: anchore/scan-action@v3
+      uses: anchore/scan-action@v2
       with:
         path: "."
 
