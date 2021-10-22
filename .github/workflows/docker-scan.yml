@@ -8,11 +8,8 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag kunalk07/test-vuln-app:latest
      
-    - name: Sysdig Secure Inline Scan
-      id: scan
-      uses: sysdiglabs/scan-action@v3
+    - name: Scan current project
+      uses: anchore/scan-action@v3
       with:
-        # Tag of the image to analyse
-        image-tag: "kunalk07/test-vuln-app:latest"
-        # API token for Sysdig Scanning auth
-        sysdig-secure-token: ${{ secrets.KUBELAB_SECURE_API_TOKEN }}
+        path: "."
+
