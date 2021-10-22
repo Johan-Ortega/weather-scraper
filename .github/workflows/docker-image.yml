@@ -36,7 +36,7 @@ jobs:
 
     - name: Do something with the matrix value
       working-directory: ${{ matrix.dir }}
-      run: docker build -t ${{ matrix.dir }}/scrapper5:${GITHUB_REF##*/} .
+      run: docker build -t ${{ matrix.dir }}/test:${GITHUB_REF##*/} .
 
     - name: Scan current project
       uses: anchore/scan-action@v2
