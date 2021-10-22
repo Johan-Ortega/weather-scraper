@@ -38,10 +38,10 @@ jobs:
       working-directory: ${{ matrix.dir }}
       run: docker build -t kunalk07/scrapper5:${GITHUB_REF##*/} .
 
-    # - name: Scan current project
-    #   uses: anchore/scan-action@v2
-    #   with:
-    #     path: "."
+    - name: Scan current project
+      uses: anchore/scan-action@v2
+      with:
+        path: "."
 
     # - name: upload Anchore scan SARIF report
     #   uses: github/codeql-action/upload-sarif@v1
@@ -50,12 +50,12 @@ jobs:
 
 
     
-    - uses: anchore/scan-action@v2
-      id: scan
-      with:
-        image: "kunalk07/scrapper5:${GITHUB_REF##*/}"
-        acs-report-enable: true
-    - name: upload Anchore scan SARIF report
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: ${{ steps.scan.outputs.sarif }}
+    # - uses: anchore/scan-action@v2
+    #   id: scan
+    #   with:
+    #     image: "kunalk07/scrapper5:${GITHUB_REF##*/}"
+    #     acs-report-enable: true
+    # - name: upload Anchore scan SARIF report
+    #   uses: github/codeql-action/upload-sarif@v1
+    #   with:
+    #     sarif_file: ${{ steps.scan.outputs.sarif }}
