@@ -36,7 +36,7 @@ jobs:
 
     - name: Do something with the matrix value
       working-directory: ${{ matrix.dir }}
-      run: docker build -t ${{ matrix.dir }}/test:${GITHUB_REF##*/} .
+      run: docker build -t kunalk07/${{ matrix.dir }}:${GITHUB_REF##*/} .
 
     - name: Scan current project
       uses: anchore/scan-action@v2
@@ -44,7 +44,7 @@ jobs:
         path: "."
 
     - name: Docker Push
-      run: docker push kunalk07/test:${GITHUB_REF##*/}
+      run: docker push kunalk07/${{ matrix.dir }}:${GITHUB_REF##*/}
 
     # - name: upload Anchore scan SARIF report
     #   uses: github/codeql-action/upload-sarif@v1
