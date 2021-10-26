@@ -11,8 +11,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix: { dir: ['dir1', 'dir2'] }
+    strategy:
+      matrix: { dir: ['dir1', 'dir2'] }
 
     steps:
     - uses: actions/checkout@v2
@@ -30,13 +30,11 @@ jobs:
       shell: bash
       id: shell-dir
 
+ 
+   
     - name: Do something with the matrix value
       working-directory: ${{ matrix.dir }}
-      run: docker build -t kunalk07/${{ shell-dir }}:${GITHUB_REF##*/} .
-   
-    # - name: Do something with the matrix value
-    #   working-directory: ${{ matrix.dir }}
-    #   run: docker build -t kunalk07/${{ matrix.dir }}:${GITHUB_REF##*/} .
+      run: docker build -t kunalk07/${{ matrix.dir }}:${GITHUB_REF##*/} .
 
     - name: Scan current project
       uses: anchore/scan-action@v2
