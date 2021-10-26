@@ -25,16 +25,10 @@ jobs:
         
     - name: Branch name
       run: echo running on branch ${GITHUB_REF##*/}
-    - name: shell-dir
-      run: chmod +x ./test.sh
-      shell: bash
-      id: shell-dir
-
- 
    
     - name: Do something with the matrix value
       working-directory: ${{ matrix.dir }}
-      run: docker build -t kunalk07/${{ matrix.dir }}:${GITHUB_REF##*/} .
+      run: docker build -t ${{secrets.DOCKER_USER}}/${{ matrix.dir }}:${GITHUB_REF##*/} .
 
     - name: Scan current project
       uses: anchore/scan-action@v2
