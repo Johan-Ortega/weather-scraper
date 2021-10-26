@@ -32,7 +32,7 @@ jobs:
 
     - name: Do something with the matrix value
       working-directory: ${{ matrix.dir }}
-      run: docker build -t kunalk07/${{ id.shell-dir }}:${GITHUB_REF##*/} .
+      run: docker build -t kunalk07/${{ shell-dir }}:${GITHUB_REF##*/} .
    
     # - name: Do something with the matrix value
     #   working-directory: ${{ matrix.dir }}
