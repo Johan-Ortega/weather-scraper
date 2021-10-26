@@ -26,8 +26,7 @@ jobs:
     - name: Branch name
       run: echo running on branch ${GITHUB_REF##*/}
     - name: run shell script
-      run: |
-         chmod +x ./test.sh 
+      run: ./test.sh
       shell: bash
    
     - name: Do something with the matrix value
