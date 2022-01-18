@@ -43,10 +43,10 @@ jobs:
         working-directory: ${{ matrix.dir }}
         run: docker build -t ${{secrets.DOCKER_USER}}/scrap:${GITHUB_REF##*/} .
 
-      - name: Scan current project
-        uses: anchore/scan-action@v2
-        with:
-          path: "."
+      # - name: Scan current project
+      #   uses: anchore/scan-action@v2
+      #   with:
+      #     path: "."
 
-      - name: Docker Push
-        run: docker push kunalk07/${{ matrix.dir }}:${GITHUB_REF##*/}
+      # - name: Docker Push
+      #   run: docker push kunalk07/${{ matrix.dir }}:${GITHUB_REF##*/}
