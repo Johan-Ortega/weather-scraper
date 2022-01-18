@@ -40,7 +40,7 @@ jobs:
           path: "."
     
       - name: Do something with the matrix value
-        #working-directory: ${{ matrix.dir }}
+        working-directory: ${{ matrix.dir }}
         run: docker build -t ${{secrets.DOCKER_USER}}/${{matrix.dir}}:${GITHUB_REF##*/} .
 
       - name: Scan current project
