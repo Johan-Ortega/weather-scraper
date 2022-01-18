@@ -23,3 +23,30 @@ jobs:
         dir: ${{fromJson(needs.directories.outputs.dir)}} # List matrix strategy from directories dynamically
     steps:
       - run: echo ${{matrix.dir}}
+      - uses: actions/checkout@v2
+      - name: docker login
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+          
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
+
+      - name: Scan current project
+        uses: anchore/scan-action@v2
+        with:
+          path: "."
+    
+      - name: Do something with the matrix value
+        working-directory: ${{ matrix.dir }}
+        run: docker build -t ${{secrets.DOCKER_USER}}/${{ matrix.dir }}:${GITHUB_REF##*/} .
+
+      - name: Scan current project
+        uses: anchore/scan-action@v2
+        with:
+          path: "."
+
+      - name: Docker Push
+        run: docker push kunalk07/${{ matrix.dir }}:${GITHUB_REF##*/}
