@@ -8,7 +8,7 @@ jobs:
   directories: # Job that list subdirectories
     runs-on: ubuntu-latest
     outputs:
-      dir: ${{ steps.set-dirs.outputs.dir }} # generate output name dir by using inner step output
+      dir: ${{ steps.set-dirs.outputs.dir }} # generate output name directories by using inner step output
     
     steps:
       - uses: actions/checkout@v2
