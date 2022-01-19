@@ -21,6 +21,9 @@ jobs:
     strategy:
       matrix:
         dir: ${{fromJson(needs.directories.outputs.dir)}} # List matrix strategy from directories dynamically
+    defaults:
+      run:
+        working-directory: ${{matrix.dir}}
     steps:
       - run: echo ${{matrix.dir}}
       - uses: actions/checkout@v2
