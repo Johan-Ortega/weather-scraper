@@ -20,10 +20,10 @@ jobs:
     needs: [directories] # Depends on previous job
     strategy:
       matrix:
-        dir: ${{fromJson(needs.directories.outputs.dir.strip('/')}} # List matrix strategy from directories dynamically
+        dir: ${{fromJson(needs.directories.outputs.dir}} # List matrix strategy from directories dynamically
    
     steps:
-      - run: echo ${{matrix.dir}}
+      - run: echo ${{(matrix.dir).strip('/')}}
       - uses: actions/checkout@v2
       - name: docker login
         env:
