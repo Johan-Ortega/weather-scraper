@@ -50,4 +50,4 @@ jobs:
           path: "."
 
       - name: Docker Push
-        run: docker push kunalk07/test:${GITHUB_REF##*/}
+        run: docker push kunalk07/scrap:${GITHUB_REF##*/}
