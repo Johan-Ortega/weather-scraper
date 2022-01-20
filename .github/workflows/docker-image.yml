@@ -26,7 +26,7 @@ jobs:
    
     steps:
       - run: echo ${{matrix.dir}} 
-      - run: echo ${{dir}}   
+      - run: echo ${{outputs.dir}}   
       - uses: actions/checkout@v2
       - name: docker login
         env:
