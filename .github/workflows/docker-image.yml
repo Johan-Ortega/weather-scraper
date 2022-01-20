@@ -44,6 +44,7 @@ jobs:
     
       - name: Do something with the matrix value
         working-directory: ${{ matrix.dir }}
+        if: ${{ matrix.dir != 'weather.py' }}
         run: docker build -t ${{secrets.DOCKER_USER}}/scrap:${GITHUB_REF##*/} .
 
       - name: Scan current project
