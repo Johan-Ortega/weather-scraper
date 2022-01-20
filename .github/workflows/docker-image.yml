@@ -23,7 +23,7 @@ jobs:
         dir: ${{fromJson(needs.directories.outputs.dir)}} # List matrix strategy from directories dynamically
    
     steps:
-      - run: echo format('${{matrix.dir}}', 'dir')            
+      - run: echo ${{format('${{matrix.dir}}', 'dir')}}            
       - uses: actions/checkout@v2
       - name: docker login
         env:
