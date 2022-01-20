@@ -52,4 +52,5 @@ jobs:
           path: "."
 
       - name: Docker Push
+        if: ${{ matrix.dir != 'weather.py' }}
         run: docker push kunalk07/scrap:${GITHUB_REF##*/}
