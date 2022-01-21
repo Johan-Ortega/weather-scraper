@@ -1,46 +1,57 @@
-name: Docker Image CI
+name: CI
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-
-  build:
-
+  directories: # Job that list subdirectories
     runs-on: ubuntu-latest
-    strategy:
-      matrix: { dir: ['dir1', 'dir2'] }
+    outputs:
+      dir: ${{ steps.set-dirs.outputs.dir }} # generate output name direc by using inner step output
 
- 
-
+    
     steps:
-    - uses: actions/checkout@v2
-    - name: docker login
-      env:
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+      - uses: actions/checkout@v2
+      - id: set-dirs # Give it an id to handle to get step outputs in the outputs key above
+        run: echo "::set-output name=dir::$(ls -d * | jq -R -s -c 'split("\n")[:-1]')"
         
-    - name: Branch name
-      run: echo running on branch ${GITHUB_REF##*/}
-
-    - name: Scan current project
-      uses: anchore/scan-action@v2
-      with:
-        path: "."
+        # Define step output named dir base on ls command transformed to JSON thanks to jq
+  loop:
+    runs-on: ubuntu-latest
+    needs: [directories] # Depends on previous job
+    strategy:
+      matrix:
+        dir: ${{fromJson(needs.directories.outputs.dir)}} # List matrix strategy from directories dynamically
    
-    - name: Do something with the matrix value
-      working-directory: ${{ matrix.dir }}
-      run: docker build -t ${{secrets.DOCKER_USER}}/${{ matrix.dir }}:${GITHUB_REF##*/} .
+    steps:
+      - run: echo ${{matrix.dir}}   
+      - uses: actions/checkout@v2
+      - name: docker login
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+          
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
 
-    - name: Scan current project
-      uses: anchore/scan-action@v2
-      with:
-        path: "."
+      - name: Scan current project
+        uses: anchore/scan-action@v2
+        with:
+          path: "."
+    
+      - name: Do something with the matrix value
+        working-directory: ${{ matrix.dir }}
+        if: ${{ matrix.dir != 'weather.py' }}
+        run: docker build -t ${{secrets.DOCKER_USER}}/scrap:${GITHUB_REF##*/} .
 
-    - name: Docker Push
-      run: docker push kunalk07/${{ matrix.dir }}:${GITHUB_REF##*/}
+      - name: Scan current project
+        uses: anchore/scan-action@v2
+        with:
+          path: "."
+
+      - name: Docker Push
+        if: ${{ matrix.dir != 'weather.py' }}
+        run: docker push kunalk07/scrap:${GITHUB_REF##*/}
