@@ -77,11 +77,11 @@ jobs:
       - run: echo ${{matrix.dir}}   
       - uses: actions/checkout@v2
 
-      # - name: Autobuild 
-      #   uses: github/codeql-action/autobuild@v1
+      - name: Autobuild 
+        uses: github/codeql-action/autobuild@v1
     
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+      # - name: Perform CodeQL Analysis
+      #   uses: github/codeql-action/analyze@v1
       
       - name: docker login
         env:
