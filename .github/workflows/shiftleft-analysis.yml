@@ -45,3 +45,10 @@ jobs:
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: reports
+        
+    - name: cat Upload report
+      uses: github/codeql-action/upload-sarif@v1
+      with: 
+        run: |
+           cat /home/runner/work/my_weather_scraper/my_weather_scraper/reports/source-dockerfile-report.sarif
+            
